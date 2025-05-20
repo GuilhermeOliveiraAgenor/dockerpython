@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: guizinho004
+      MYSQL_DATABASE: apiproduct
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  apipython:
+    build:
+      context: ./apipython
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - DATABASE_URL=mysql+mysqlconnector://root:guizinho004@host.docker.internal:3306/apiproduct
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - app-network
+
+  node_api:
+    build:
+      context: ./apinode
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - apipython
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:

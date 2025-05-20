@@ -1,0 +1,10 @@
+pip install fastapi uvicorn sqlalchemy pymysql
+pip install flask_sqlalchemy
+pip install redis
+
+python app.py
+
+
+
+npm install
+npm install express axios redis
