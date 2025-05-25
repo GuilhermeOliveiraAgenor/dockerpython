@@ -11,6 +11,13 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
   apipython:
     build:
       context: ./apipython
@@ -19,6 +26,7 @@ services:
       - "8000:8000"
     depends_on:
       - redis
+      - mysql
     environment:
       - DATABASE_URL=mysql+mysqlconnector://root:guizinho004@host.docker.internal:3306/apiproduct
       - REDIS_URL=redis://redis:6379
@@ -33,13 +41,6 @@ services:
       - "3000:3000"
     depends_on:
       - apipython
-    networks:
-      - app-network
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
     networks:
       - app-network
 

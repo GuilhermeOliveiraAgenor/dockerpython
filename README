@@ -8,3 +8,6 @@ python app.py
 
 npm install
 npm install express axios redis
+
+
+ wsl ./deploy.sh
