@@ -1,6 +1,7 @@
 pip install fastapi uvicorn sqlalchemy pymysql
 pip install flask_sqlalchemy
 pip install redis
+pip install requests
 
 python app.py
 
